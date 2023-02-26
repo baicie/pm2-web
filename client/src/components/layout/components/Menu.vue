@@ -1,19 +1,17 @@
 <template>
-  <elmenu
+  <el-menu
     id="nav"
-    class="menu-site"
     :mode="menuMode"
-    :selected-keys="[activeMenuItem]"
-    disabled-overflow
+    class="menu-site"
+    :default-active="activeMenuItem"
+    @select="handleSelect"
   >
     <template v-for="item in navInfo" :key="item.path">
-      <elmenu-item>
-        <router-link :to="item.path">
-          {{ item.title }}
-        </router-link>
-      </elmenu-item>
+      <el-menu-item :index="item.path">
+        {{ item.title }}
+      </el-menu-item>
     </template>
-  </elmenu>
+  </el-menu>
 </template>
 <script lang="ts" setup>
 // # config import
@@ -22,32 +20,35 @@ const route = useRoute();
 const props = defineProps({
   isMobile: {
     type: Boolean,
-    required: true,
-  },
+    required: true
+  }
 });
-const activeMenuItem = ref("home");
+const activeMenuItem = ref('/home/home');
 const navInfo = ref([
   {
-    path: "/home/home",
-    title: "首页",
-  },
+    path: '/home/home',
+    title: '首页'
+  }
 ]);
 // # pinia
 // # computed
 const menuMode = computed(() => {
-  return props.isMobile ? "inline" : "horizontal";
+  return props.isMobile ? 'vertical' : 'horizontal';
 });
 
 // # watch
 watch(
   () => route.path,
   (pathname) => {
-    const modules = pathname.split("/");
+    const modules = pathname.split('/');
     activeMenuItem.value = `/${modules[1]}`;
   },
   { immediate: true }
 );
 // # function
+function handleSelect(key: string, keyPath: string[]) {
+  console.log(key, keyPath);
+}
 // # lifecycle
 // # style
 </script>

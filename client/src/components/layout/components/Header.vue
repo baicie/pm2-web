@@ -1,43 +1,43 @@
 <template>
   <header id="header" :class="headerClassName">
+    <!-- 手机端菜单  -->
     <el-popover
       v-if="isMobile"
-      v-model:visible="menuVisible"
+      :visible="menuVisible"
       overlay-class-name="popover-menu"
       trigger="click"
-      arrow-point-at-center
     >
-      <Edit class="nav-phone-icon" />
-      <template #content>
-        <Menu :is-mobile="isMobile"></Menu>
+      <template #reference>
+        <el-icon>
+          <Edit class="nav-phone-icon" />
+        </el-icon>
       </template>
     </el-popover>
-    <el-row :style="{ flexFlow: 'nowrap', height: 64 }">
+    <el-row :style="{ flexFlow: 'nowrap', height: 64, justifyContent: 'center' }">
       <el-col v-bind="colProps[1]" class="menu-row">
-        <!-- <Menu v-if="!isMobile" :is-mobile="isMobile"></Menu> -->
-        <div :style="{ height: '64px' }"></div>
+        <Menu v-if="!isMobile" :is-mobile="isMobile"></Menu>
       </el-col>
     </el-row>
   </header>
 </template>
 <script lang="ts" setup>
-import { Edit } from "@element-plus/icons-vue";
-import { storeToRefs } from "pinia";
-import { computed, ref } from "vue";
-import { useRoute } from "vue-router";
-import { globalConfigStore } from "../../../store/base-config";
-import Menu from "./Menu.vue";
+import { Edit } from '@element-plus/icons-vue';
+import { storeToRefs } from 'pinia';
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { globalConfigStore } from '../../../store/base-config';
+import Menu from './Menu.vue';
 
 const route = useRoute();
 const { isMobile } = storeToRefs(globalConfigStore());
 
 const isHome = computed(() => {
-  return ["", "index", "index-cn"].includes(route.path);
+  return ['', 'index', 'index-cn'].includes(route.path);
 });
 
 const menuVisible = ref(false);
 const colProps = isHome.value
-  ? [{ flex: "none" }, { flex: "auto" }]
+  ? [{ flex: 'none' }, { flex: 'auto' }]
   : [
       {
         xxxl: 4,
@@ -46,7 +46,7 @@ const colProps = isHome.value
         lg: 6,
         md: 6,
         sm: 24,
-        xs: 24,
+        xs: 24
       },
       {
         xxxl: 20,
@@ -55,17 +55,24 @@ const colProps = isHome.value
         lg: 18,
         md: 18,
         sm: 0,
-        xs: 0,
-      },
+        xs: 0
+      }
     ];
 
 const headerClassName = {
   clearfix: true,
-  "home-header": isHome.value,
+  'home-header': isHome.value
 };
 </script>
 
 <style scope>
+#header {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
 .adblock-banner,
 .alert-banner {
   position: relative;

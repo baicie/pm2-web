@@ -1,15 +1,18 @@
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-import Pm2Api from "../api/pm2";
-import { defaultErrorHandler } from "../utils";
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
+import Pm2Api from '../api/pm2';
+import { defaultErrorHandler } from '../utils';
+import type { Column } from 'element-plus';
+import ElButton from 'element-plus';
 
 export interface TableItem {
   title: string;
-  dataIndex?: string;
+  dataKey?: string;
   key: string;
+  width: number;
 }
 
-export const usePm2Store = defineStore("pm2-store", () => {
+export const usePm2Store = defineStore('pm2-store', () => {
   const list = ref<Array<DataFont>>([]);
 
   const getList = computed(() => list.value);
@@ -45,40 +48,53 @@ export const usePm2Store = defineStore("pm2-store", () => {
     return value.map((data) => ({
       ...data,
       cpu: data.monit.cpu,
-      memory: data.monit.memory,
+      memory: data.monit.memory
     }));
   }
 
-  const columnsList = ref<Array<TableItem>>([
+  const columnsList = ref<Array<Column<any>>>([
     {
-      title: "pm_id",
-      dataIndex: "pm_id",
-      key: "pm_id",
+      title: '进程id',
+      dataKey: 'pm_id',
+      key: 'pm_id',
+      width: 150
     },
     {
-      title: "name",
-      dataIndex: "name",
-      key: "name",
+      title: '进程名称',
+      dataKey: 'name',
+      key: 'name',
+      width: 150
     },
     {
-      title: "pid",
-      dataIndex: "pid",
-      key: "pid",
+      title: '进程端口号',
+      dataKey: 'pid',
+      key: 'pid',
+      width: 150
     },
     {
-      title: "cpu",
-      dataIndex: "cpu",
-      key: "cpu",
+      title: 'cpu资源占有率',
+      dataKey: 'cpu',
+      key: 'cpu',
+      width: 150
     },
     {
-      title: "memory",
-      dataIndex: "memory",
-      key: "memory",
+      title: 'memory',
+      dataKey: 'memory',
+      key: 'memory',
+      width: 150
     },
     {
-      title: "Action",
-      key: "action",
-    },
+      title: '操作',
+      key: 'action',
+      width: 150,
+      cellRenderer: ({ cellData }) =>
+        h(
+          // ElButton, //这里不能写成字符串'ElTag'，如果是普通的html标签如'div'，则可以。
+          // { onClick: () => console.log('cellData', cellData), type: 'danger', icon: 'Delete' },
+          // { default: () => '删除' }
+          'div'
+        )
+    }
   ]);
 
   return {
@@ -87,7 +103,7 @@ export const usePm2Store = defineStore("pm2-store", () => {
     getListFn,
     columns: columnsList,
     stopPm2,
-    reloadPm2,
+    reloadPm2
   };
 });
 

@@ -1,29 +1,31 @@
 <template>
   <BcPage>
-    <!-- <el-table :columns="columns" :data-source="getList">
-      <template #bodyCell="{ column, record }">
+    <el-table-v2 :columns="columns" :data="getList" :width="1200" :height="400" fixed>
+      <!-- <template #bodyCell="{ column, record }">
         <template v-if="column?.key === 'action'">
-          <el-button type="link" @click="handleStop(record)">
+          <el-button text @click="handleStop(record)">
             <template #icon>
               <stop-outlined />
             </template>
           </el-button>
-          <el-button type="link" @click="handleReload(record)">
+          <el-button text @click="handleReload(record)">
             <template #icon>
               <redo-outlined />
             </template>
           </el-button>
         </template>
-      </template>
-    </el-table> -->
-    <ElButton type="primary">primary</ElButton>
-    <el-button type="primary">primary2</el-button>
+      </template> -->
+      <!-- <template #row="props">
+        <el-button>1</el-button>
+      </template> -->
+    </el-table-v2>
   </BcPage>
 </template>
 <script lang="ts" setup>
 // # config import
-import { usePm2Store } from "../store/pm2";
-import { defaultErrorHandler } from "../utils";
+import { usePm2Store } from '../store/pm2';
+import { defaultErrorHandler } from '../utils';
+import type { Column } from 'element-plus';
 // import { StopOutlined, RedoOutlined } from "@ant-design/icons-vue";
 // # base state
 

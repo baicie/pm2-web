@@ -1,12 +1,12 @@
-import { ElMessage } from "element-plus";
-import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-import UserApi from "../api/user";
-import { defaultErrorHandler, useI18nNotPinia } from "../utils";
-import { defaultSucess } from "../utils/default-success";
-import { setToken } from "../utils/token";
+import { ElMessage } from 'element-plus';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
+import UserApi from '../api/user';
+import { defaultErrorHandler, useI18nNotPinia } from '../utils';
+import { defaultSucess } from '../utils/default-success';
+import { setToken } from '../utils/token';
 
-export type UserRoleType = "admin" | "editor" | "ghost";
+export type UserRoleType = 'admin' | 'editor' | 'ghost';
 
 export interface User {
   userid: string;
@@ -15,17 +15,17 @@ export interface User {
   password: string;
 }
 
-export interface UserFont extends Pick<User, "password" | "username"> {
+export interface UserFont extends Pick<User, 'password' | 'username'> {
   passwordConfirmation: string;
 }
 
-export interface UserLogin extends Pick<User, "password" | "username"> {}
+export interface UserLogin extends Pick<User, 'password' | 'username'> {}
 
 export interface UserWithToken extends User {
   token: string;
 }
 
-export const useUserStore = defineStore("user-store", () => {
+export const useUserStore = defineStore('user-store', () => {
   const { returnI18n } = useI18nNotPinia();
   const user = ref<UserWithToken>();
 
@@ -35,7 +35,7 @@ export const useUserStore = defineStore("user-store", () => {
     try {
       if (params.passwordConfirmation !== params.password) {
         // @ts-ignore
-        throw new Error(returnI18n("login.register.loginButton"));
+        throw new Error(returnI18n('login.register.loginButton'));
       }
       const res = await UserApi.createAdmin<string>(params);
 
@@ -48,12 +48,19 @@ export const useUserStore = defineStore("user-store", () => {
   async function login(params: UserLogin): Promise<boolean> {
     try {
       if (!params.password || !params.password) {
-        throw new Error(returnI18n("login.register.loginButton"));
+        throw new Error(returnI18n('login.register.loginButton'));
       }
       const res = await UserApi.login<UserWithToken>(params);
       user.value = res.data;
       setToken(user.value.token);
-      ElMessage.success(returnI18n("login.register.loginButton"));
+      // ElMessage({
+      //   type: 'success',
+      //   message: returnI18n('login.register.loginButton')
+      // });
+      ElMessage({
+        message: 'Congrats, this is a success message.',
+        type: 'success'
+      });
       return true;
     } catch (error) {
       defaultErrorHandler(error);
@@ -64,6 +71,6 @@ export const useUserStore = defineStore("user-store", () => {
   return {
     user,
     createAdmin,
-    login,
+    login
   };
 });

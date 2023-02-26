@@ -6,6 +6,7 @@ import router from './routes';
 import { pinia } from './store';
 import './style.css';
 import './theme/index';
+import 'element-plus/dist/index.css';
 
 const app = createApp(App);
 // pinia 状态

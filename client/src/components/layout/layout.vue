@@ -9,16 +9,12 @@
           :closable="false"
           placement="left"
           class="drawer drawer-left"
-          :visible="visible"
+          v-model="visible"
           wrapper-class-name="drawer-wrapper"
           width="60%"
         >
-          <Menu
-            :is-mobile="isMobile"
-            :menus="dataSource"
-            :active-menu-item="activeMenuItem"
-          ></Menu>
-          <template #handle>
+          <Menu :is-mobile="isMobile" :menus="dataSource" :active-menu-item="activeMenuItem"></Menu>
+          <template #header>
             <div class="drawer-handle" @click="handleClickShowButton">
               <close-outlined v-if="visible" :style="iconStyle" />
               <Edit v-else :style="iconStyle" />
@@ -27,23 +23,14 @@
         </el-drawer>
       </template>
       <template v-else>
-        <el-col
-          :xxxl="4"
-          :xxl="4"
-          :xl="5"
-          :lg="6"
-          :md="6"
-          :sm="24"
-          :xs="24"
-          class="main-menu"
-        >
+        <el-col :xxxl="4" :xxl="4" :xl="5" :lg="6" :md="6" :sm="24" :xs="24" class="main-menu">
           <el-affix>
             <section class="main-menu-inner">
-              <Menu
+              <!-- <Menu
                 :is-mobile="isMobile"
                 :menus="dataSource"
                 :active-menu-item="activeMenuItem"
-              ></Menu>
+              ></Menu> -->
             </section>
           </el-affix>
         </el-col>
@@ -75,12 +62,8 @@
           <el-dropdown placement="top">
             <template #overlay>
               <el-menu>
-                <el-menu-item key="default">{{
-                  $t("app.theme.switch.default")
-                }}</el-menu-item>
-                <el-menu-item key="dark">{{
-                  $t("app.theme.switch.dark")
-                }}</el-menu-item>
+                <el-menu-item key="default">{{ $t('app.theme.switch.default') }}</el-menu-item>
+                <el-menu-item key="dark">{{ $t('app.theme.switch.dark') }}</el-menu-item>
               </el-menu>
             </template>
             <el-avatar class="fixed-widgets-avatar" :size="44">
@@ -96,18 +79,18 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Edit } from "@element-plus/icons-vue";
-import { storeToRefs } from "pinia";
-import { computed, ref } from "vue";
-import { useRoute } from "vue-router";
-import { globalConfigStore } from "../../store/base-config";
-import { useMenus } from "../../utils/hooks/useMenus";
+import { Edit } from '@element-plus/icons-vue';
+import { storeToRefs } from 'pinia';
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { globalConfigStore } from '../../store/base-config';
+import { useMenus } from '../../utils/hooks/useMenus';
 
-import Footer from "./components/Footer.vue";
-import Header from "./components/Header.vue";
-import Menu from "./components/Menu.vue";
+import Footer from './components/Footer.vue';
+import Header from './components/Header.vue';
+import Menu from './components/Menu.vue';
 // import PrevAndNext from "./components/PrevAndNext.vue";
-import ThemeIcon from "./components/ThemeIcon.vue";
+import ThemeIcon from './components/ThemeIcon.vue';
 
 const rControl = /[\u0000-\u001f]/g;
 const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'<>,.?/]+/g;
@@ -127,13 +110,13 @@ const headers = computed(() => {
   //   tempHeaders.push({ title: "API", href: "#API" });
   // }
 
-  return [{ title: "API", href: "#API" }];
+  return [{ title: 'API', href: '#API' }];
 });
 
 const mainContainerClass = computed(() => {
   return {
-    "main-container": true,
-    "main-container-component": false,
+    'main-container': true,
+    'main-container-component': false
   };
 });
 const handleClickShowButton = () => {
@@ -144,15 +127,15 @@ const slugifyTitle = (str: string) => {
   return (
     str
       // Remove control characters
-      .replace(rControl, "")
+      .replace(rControl, '')
       // Replace special characters
-      .replace(rSpecial, "-")
+      .replace(rSpecial, '-')
       // Remove continuos separators
-      .replace(/\-{2,}/g, "-")
+      .replace(/\-{2,}/g, '-')
       // Remove prefixing and trailing separtors
-      .replace(/^\-+|\-+$/g, "")
+      .replace(/^\-+|\-+$/g, '')
       // ensure it doesn't start with a number (#121)
-      .replace(/^(\d)/, "_$1")
+      .replace(/^(\d)/, '_$1')
   );
 };
 
@@ -160,7 +143,7 @@ const slugifyTitle = (str: string) => {
 
 const iconStyle = {
   // color: '#fff',
-  fontSize: "20px",
+  fontSize: '20px'
 };
 </script>
 <style lang="less" scoped>
@@ -183,7 +166,7 @@ const iconStyle = {
   }
 }
 
-[data-theme="dark"] .toc-affix :deep(.ant-anchor) {
+[data-theme='dark'] .toc-affix :deep(.ant-anchor) {
   .ant-anchor-link {
     border-left: 2px solid #303030;
   }
@@ -203,9 +186,15 @@ const iconStyle = {
   .fixed-widgets-avatar {
     color: #000;
     background-color: #fff;
-    box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
-      0 9px 28px 8px #0000000d;
+    box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
     transition: color 0.3s;
   }
+}
+.main-container {
+  transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  position: relative;
+  min-height: 500px;
+  padding: 0 170px 32px 64px;
+  background: #fff;
 }
 </style>
