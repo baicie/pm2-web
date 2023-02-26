@@ -38,6 +38,6 @@ connection
     console.error(`typeorm error:${error}`);
   });
 
-app.listen(6174, () => {
-  console.log('Server is running at 6174');
+app.listen(6418, () => {
+  console.log('Server is running at http://localhost:6418');
 });

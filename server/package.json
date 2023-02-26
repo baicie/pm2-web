@@ -1,5 +1,7 @@
 {
-  "type": "commonjs",
+  "name": "@baicie/pm2-web-server",
+  "private": true,
+  "version": "0.1.0",
   "scripts": {
     "dev": "nodemon --config nodemon.json",
     "prod": "nodemon --config nodemon.prod.json",

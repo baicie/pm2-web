@@ -6,6 +6,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
 import { defineConfig } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
+
+const ip = 'http://localhost:6418/';
 // 是否引入CDN
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -59,6 +61,15 @@ export default defineConfig({
             return id.toString().split('node_modules/.pnpm/')[1].split('/')[0].toString();
           }
         }
+      }
+    }
+  },
+  server: {
+    port: 6417,
+    proxy: {
+      '/api': {
+        target: ip,
+        changeOrigin: true
       }
     }
   }

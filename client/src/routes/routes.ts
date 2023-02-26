@@ -1,25 +1,34 @@
-import { RouteRecordRaw, RouterView } from 'vue-router';
-import { HOME, HOMEINDEX } from './route-name';
+import { RouteRecordRaw } from "vue-router";
+import Layout from "../components/layout/layout.vue";
+import { HOME, HOMEHOME, LOGIN } from "./route-name";
 
 export default [
   {
-    path: '/',
-    redirect: '/home'
+    path: "/",
+    redirect: "/login",
+  },
+  {
+    path: "/login",
+    name: LOGIN,
+    meta: { requiresAuth: false },
+    // @ts-ignore
+    component: () => import("../pages/login.vue"),
   },
 
   {
-    path: '/home',
+    path: "/home",
     name: HOME,
     meta: { requiresAuth: true },
-    component: RouterView,
-    redirect: '/home/index',
+    component: Layout,
+    redirect: "/home/home",
     children: [
       {
-        path: 'index',
-        name: HOMEINDEX,
-        meta: { requiresAuth: true, authtype: 'all', title: '首页' },
-        component: () => import('@/pages/home-page.vue')
-      }
-    ]
-  }
+        path: "home",
+        name: HOMEHOME,
+        meta: { requiresAuth: true, authtype: "all", title: "首页" },
+        // @ts-ignore
+        component: () => import("../pages/home.vue"),
+      },
+    ],
+  },
 ] as readonly RouteRecordRaw[];

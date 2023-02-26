@@ -1,3 +1,3 @@
 module.exports = {
-  extends: [],
+  extends: ["./client/.eslintrc.js", "./server/.eslintrc.js"],
 };

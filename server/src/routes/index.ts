@@ -45,6 +45,8 @@ router.use((err: errorType, req: Request, res: Response) => {
     const errCode = (output && output.statusCode) || 500;
     const errMsg = err.message;
     const errData = err.data;
+    console.log('res', res);
+
     res.status(200).json({
       code: errCode,
       msg: errMsg,

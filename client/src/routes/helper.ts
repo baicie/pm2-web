@@ -1,20 +1,25 @@
-import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
-import NProgress from 'nprogress';
-
+import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+import NProgress from "nprogress";
+import { useEnv } from "../utils";
+const { isSSR } = useEnv();
 export function beforeEach(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) {
-  // eslint-disable-next-line no-console
   console.log(`[route] from ${from.fullPath} to ${to.fullPath}`);
-  NProgress.start();
+  if (to.path !== from.path) {
+    isSSR ? "" : NProgress.start();
+  }
   next();
 }
 
-export function afterEach(to: RouteLocationNormalized, from: RouteLocationNormalized) {
+export function afterEach(
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized
+) {
   if (to.path !== from.path) {
-    NProgress.done();
-    document.documentElement.scrollTop = 0;
+    isSSR ? "" : NProgress.done();
+    isSSR ? "" : (document.documentElement.scrollTop = 0);
   }
 }
