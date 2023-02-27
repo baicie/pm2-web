@@ -20,5 +20,6 @@
   z-index: 8;
   margin-left: -1px;
   color: #ffffffa6;
+  line-height: 64px;
 }
 </style>

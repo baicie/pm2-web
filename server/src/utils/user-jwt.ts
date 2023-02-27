@@ -38,6 +38,7 @@ export const jwtAuth: unknown = expressjwt({
     '/api/pm2/list',
     '/api/pm2/stop',
     '/api/pm2/reload',
+    '/api/pm2/delete',
   ],
 });
 

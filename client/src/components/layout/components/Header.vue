@@ -1,6 +1,5 @@
 <template>
   <header id="header" :class="headerClassName">
-    <!-- 手机端菜单  -->
     <el-popover
       v-if="isMobile"
       :visible="menuVisible"
@@ -8,27 +7,35 @@
       trigger="click"
     >
       <template #reference>
-        <el-icon>
+        <!-- <el-icon>
           <Edit class="nav-phone-icon" />
-        </el-icon>
+        </el-icon> -->
       </template>
     </el-popover>
-    <el-row :style="{ flexFlow: 'nowrap', height: 64, justifyContent: 'center' }">
-      <el-col v-bind="colProps[1]" class="menu-row">
-        <Menu v-if="!isMobile" :is-mobile="isMobile"></Menu>
+    <el-row :style="{ flexFlow: 'nowrap', height: '64px', justifyContent: 'space-between' }">
+      <el-col v-bind="colProps[0]" class="menu-row">
+        <!-- <Menu :is-mobile="isMobile"></Menu> -->
+        诚信征婚,广告招租
       </el-col>
+      <el-button link type="primary" class="quit" @click="handleExit">
+        <el-icon><SwitchButton /></el-icon>
+      </el-button>
     </el-row>
   </header>
 </template>
 <script lang="ts" setup>
+import { SwitchButton } from '@element-plus/icons-vue';
+import { useUserStore } from '@/store/user';
 import { Edit } from '@element-plus/icons-vue';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { globalConfigStore } from '../../../store/base-config';
 import Menu from './Menu.vue';
+import router from '@/routes';
 
 const route = useRoute();
+const { loginOut } = useUserStore();
 const { isMobile } = storeToRefs(globalConfigStore());
 
 const isHome = computed(() => {
@@ -47,15 +54,6 @@ const colProps = isHome.value
         md: 6,
         sm: 24,
         xs: 24
-      },
-      {
-        xxxl: 20,
-        xxl: 20,
-        xl: 19,
-        lg: 18,
-        md: 18,
-        sm: 0,
-        xs: 0
       }
     ];
 
@@ -63,6 +61,10 @@ const headerClassName = {
   clearfix: true,
   'home-header': isHome.value
 };
+
+function handleExit() {
+  loginOut(router);
+}
 </script>
 
 <style scope>
@@ -103,5 +105,32 @@ const headerClassName = {
 .menu-row {
   display: flex;
   justify-content: flex-end;
+  text-align: center;
+  line-height: 64px;
+}
+.drawer-handle {
+  position: absolute;
+  width: 41px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 10;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: #fff;
+  box-shadow: 2px 0 8px #00000026;
+}
+.quit {
+  line-height: 64px;
+  padding-right: 64px;
 }
 </style>

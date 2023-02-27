@@ -2,24 +2,20 @@
   <Header></Header>
   <div class="main-wrapper">
     <el-row>
-      <!-- 侧边栏菜单 -->
       <template v-if="isMobile">
+        <div class="drawer-handle" @click="handleClickShowButton">
+          <el-icon :style="iconStyle"><Expand /></el-icon>
+        </div>
         <el-drawer
           key="mobile-menu"
           :closable="false"
-          placement="left"
           class="drawer drawer-left"
           v-model="visible"
           wrapper-class-name="drawer-wrapper"
-          width="60%"
+          size="60%"
+          direction="ltr"
         >
           <Menu :is-mobile="isMobile" :menus="dataSource" :active-menu-item="activeMenuItem"></Menu>
-          <template #header>
-            <div class="drawer-handle" @click="handleClickShowButton">
-              <close-outlined v-if="visible" :style="iconStyle" />
-              <Edit v-else :style="iconStyle" />
-            </div>
-          </template>
         </el-drawer>
       </template>
       <template v-else>
@@ -31,6 +27,7 @@
                 :menus="dataSource"
                 :active-menu-item="activeMenuItem"
               ></Menu> -->
+              这块应该是二级菜单但好像没必要
             </section>
           </el-affix>
         </el-col>
@@ -79,7 +76,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Edit } from '@element-plus/icons-vue';
+import { Expand, CloseBold } from '@element-plus/icons-vue';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -116,7 +113,8 @@ const headers = computed(() => {
 const mainContainerClass = computed(() => {
   return {
     'main-container': true,
-    'main-container-component': false
+    'main-container-component': false,
+    'is-mobile': isMobile
   };
 });
 const handleClickShowButton = () => {
@@ -196,5 +194,32 @@ const iconStyle = {
   min-height: 500px;
   padding: 0 170px 32px 64px;
   background: #fff;
+}
+
+@media only screen and (max-width: 992px) {
+  .main-container {
+    padding-right: 48px;
+    padding-left: 48px;
+
+    .toc-affix {
+      display: none;
+    }
+  }
+  .code-boxes-col-2-1,
+  .code-boxes-col-1-1 {
+    float: none;
+    width: 100%;
+  }
+}
+
+.is-mobile,
+.main-container {
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: 16px;
+  padding-left: 16px;
+  > .markdown > * {
+    width: 100% !important;
+  }
 }
 </style>

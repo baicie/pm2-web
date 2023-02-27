@@ -86,3 +86,29 @@ export async function pm2Reload(
     defaultErrorHandler(res, error);
   }
 }
+
+export async function pm2Delete(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const err = validationResult(req);
+    if (!err.isEmpty) {
+      next(boom.badRequest('error', err.array()));
+    } else {
+      const { id } = req.body;
+
+      if (typeof id === 'undefined') return;
+      pm2.delete(id, (error) => {
+        if (error) {
+          defaultErrorHandler(res, error);
+        } else {
+          defaultSucesshandler(res, 'success');
+        }
+      });
+    }
+  } catch (error) {
+    defaultErrorHandler(res, error);
+  }
+}

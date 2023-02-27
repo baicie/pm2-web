@@ -1,9 +1,8 @@
+import useMessage from '@/utils/hooks/useMessage';
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 import Pm2Api from '../api/pm2';
 import { defaultErrorHandler } from '../utils';
-import type { Column } from 'element-plus';
-import ElButton from 'element-plus';
 
 export interface TableItem {
   title: string;
@@ -13,6 +12,7 @@ export interface TableItem {
 }
 
 export const usePm2Store = defineStore('pm2-store', () => {
+  const { message } = useMessage();
   const list = ref<Array<DataFont>>([]);
 
   const getList = computed(() => list.value);
@@ -30,7 +30,12 @@ export const usePm2Store = defineStore('pm2-store', () => {
   async function stopPm2(params: DataFont) {
     // console.log(params);
     try {
-      await Pm2Api.stop(params.pm_id);
+      const res = await Pm2Api.stop(params.pm_id);
+
+      if (res.code === 200) {
+        message('操作成功', 'success');
+        await getListFn();
+      }
     } catch (error) {
       defaultErrorHandler(error);
     }
@@ -38,7 +43,23 @@ export const usePm2Store = defineStore('pm2-store', () => {
 
   async function reloadPm2(params: DataFont) {
     try {
-      await Pm2Api.reload(params.pm_id);
+      const res = await Pm2Api.reload(params.pm_id);
+      if (res.code === 200) {
+        message('操作成功', 'success');
+        await getListFn();
+      }
+    } catch (error) {
+      defaultErrorHandler(error);
+    }
+  }
+
+  async function deletPm2(params: DataFont) {
+    try {
+      const res = await Pm2Api.delete(params.pm_id);
+      if (res.code === 200) {
+        message('操作成功', 'success');
+        await getListFn();
+      }
     } catch (error) {
       defaultErrorHandler(error);
     }
@@ -52,56 +73,11 @@ export const usePm2Store = defineStore('pm2-store', () => {
     }));
   }
 
-  const columnsList = ref<Array<Column<any>>>([
-    {
-      title: '进程id',
-      dataKey: 'pm_id',
-      key: 'pm_id',
-      width: 150
-    },
-    {
-      title: '进程名称',
-      dataKey: 'name',
-      key: 'name',
-      width: 150
-    },
-    {
-      title: '进程端口号',
-      dataKey: 'pid',
-      key: 'pid',
-      width: 150
-    },
-    {
-      title: 'cpu资源占有率',
-      dataKey: 'cpu',
-      key: 'cpu',
-      width: 150
-    },
-    {
-      title: 'memory',
-      dataKey: 'memory',
-      key: 'memory',
-      width: 150
-    },
-    {
-      title: '操作',
-      key: 'action',
-      width: 150,
-      cellRenderer: ({ cellData }) =>
-        h(
-          // ElButton, //这里不能写成字符串'ElTag'，如果是普通的html标签如'div'，则可以。
-          // { onClick: () => console.log('cellData', cellData), type: 'danger', icon: 'Delete' },
-          // { default: () => '删除' }
-          'div'
-        )
-    }
-  ]);
-
   return {
     list,
     getList,
     getListFn,
-    columns: columnsList,
+    deletPm2,
     stopPm2,
     reloadPm2
   };

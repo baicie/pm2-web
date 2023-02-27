@@ -1,37 +1,31 @@
 <template>
   <BcPage>
-    <el-table-v2 :columns="columns" :data="getList" :width="1200" :height="400" fixed>
-      <!-- <template #bodyCell="{ column, record }">
-        <template v-if="column?.key === 'action'">
-          <el-button text @click="handleStop(record)">
-            <template #icon>
-              <stop-outlined />
-            </template>
-          </el-button>
-          <el-button text @click="handleReload(record)">
-            <template #icon>
-              <redo-outlined />
-            </template>
-          </el-button>
+    <el-table :data="getList" style="width: 100%" fit>
+      <el-table-column fixed prop="pm_id" label="进程id" />
+      <el-table-column prop="name" label="进程名称" />
+      <el-table-column prop="pid" label="进程端口号" />
+      <el-table-column prop="cpu" label="cpu资源占有率" />
+      <el-table-column prop="memory" label="memory" />
+      <el-table-column label="操作" width="200">
+        <template #default="{ row }">
+          <el-button link type="primary" @click="handleStop(row)">停止</el-button>
+          <el-button link type="primary" @click="handleReload(row)">重载</el-button>
+          <el-button link type="primary" @click="handleDelete(row)">删除</el-button>
         </template>
-      </template> -->
-      <!-- <template #row="props">
-        <el-button>1</el-button>
-      </template> -->
-    </el-table-v2>
+      </el-table-column>
+    </el-table>
   </BcPage>
 </template>
 <script lang="ts" setup>
 // # config import
-import { usePm2Store } from '../store/pm2';
-import { defaultErrorHandler } from '../utils';
-import type { Column } from 'element-plus';
+import { DataFont, usePm2Store } from '../store/pm2';
 // import { StopOutlined, RedoOutlined } from "@ant-design/icons-vue";
 // # base state
 
 // # pinia
 const store = usePm2Store();
-const { getList, columns } = storeToRefs(store);
+const { getList } = storeToRefs(store);
+const timer = ref(0);
 // # computed
 // # watch
 
@@ -39,23 +33,27 @@ onMounted(() => {});
 
 // # function
 function handleStop(record: unknown) {
-  console.log(record);
-
-  store.stopPm2(record);
+  store.stopPm2(record as DataFont);
 }
 
 function handleReload(record: unknown) {
-  console.log(record);
-  store.reloadPm2(record);
+  store.reloadPm2(record as DataFont);
+}
+
+function handleDelete(record: unknown) {
+  store.deletPm2(record as DataFont);
 }
 // async function getList
 
 async function init() {
   // await hasAdmin();
   await store.getListFn();
+  timer.value = setInterval(() => store.getListFn(), 5000);
 }
 // # lifecycle
-
+onBeforeUnmount(() => {
+  clearInterval(timer.value);
+});
 init();
 // # style
 </script>
