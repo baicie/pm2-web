@@ -1,63 +1,63 @@
 {
-  "name": "@baicie/pm2-web",
-  "version": "0.1.0",
-  "description": "pm2 web server",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm -r --filter=./client run build && pnpm -r --filter=./server run build",
-    "server:client": "pnpm -r --filter=./client run preview",
-    "server:server": "pnpm -r --filter=./server run prod",
-    "server": "concurrently \"npm run server:client\" \"npm run server:server\"",
-    "lint": "pnpm -r --filter=./client run lint && pnpm -r --filter=./server run lint",
-    "format": "pnpm -r --filter=./client run format && pnpm -r --filter=./server run format"
-  },
-  "author": "",
-  "files": [
-    "scripts",
-    "bin",
-    "client/dist",
-    "server/dist"
-  ],
-  "license": "MIT",
-  "keywords": [
-    "pm2 web"
-  ],
-  "bin": {
-    "pm2-web": "bin/pm2-web"
-  },
-  "dependencies": {
-    "concurrently": "^7.6.0"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
-    "@commitlint/types": "^17.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.53.0",
-    "eslint": "^8.34.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.9.0",
-    "lint-staged": "^13.1.2",
-    "pnpm": "^7.27.1",
-    "prettier": "^2.8.4",
-    "rimraf": "^4.1.2",
-    "vue-eslint-parser": "^9.1.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/baicie/pm2-web"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,vue}": [
-      "eslint --cache --fix",
-      "prettier --write"
-    ]
-  }
+    "name": "@baicie/pm2-web",
+    "version": "0.1.0",
+    "description": "pm2 web server",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "pnpm -r --filter=./client run build && pnpm -r --filter=./server run build",
+        "server:client": "pnpm -r --filter=./client run preview",
+        "server:server": "pnpm -r --filter=./server run prod",
+        "server": "concurrently \"npm run server:client\" \"npm run server:server\"",
+        "lint": "pnpm -r --filter=./client run lint && pnpm -r --filter=./server run lint",
+        "format": "pnpm -r --filter=./client run format && pnpm -r --filter=./server run format"
+    },
+    "author": "baicie",
+    "files": [
+        "scripts",
+        "bin",
+        "client/dist",
+        "server/dist"
+    ],
+    "license": "MIT",
+    "keywords": [
+        "pm2 web"
+    ],
+    "bin": {
+        "pm2-web": "bin/pm2-web"
+    },
+    "dependencies": {
+        "concurrently": "^7.6.0"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.4.4",
+        "@commitlint/config-conventional": "^17.4.4",
+        "@commitlint/types": "^17.4.4",
+        "@typescript-eslint/eslint-plugin": "^5.53.0",
+        "@typescript-eslint/parser": "^5.53.0",
+        "eslint": "^8.34.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-config-prettier": "^8.6.0",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-vue": "^9.9.0",
+        "lint-staged": "^13.1.2",
+        "pnpm": "^7.27.1",
+        "prettier": "^2.8.4",
+        "rimraf": "^4.1.2",
+        "vue-eslint-parser": "^9.1.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/baicie/pm2-web"
+    },
+    "lint-staged": {
+        "src/**/*.{js,jsx,ts,tsx,vue}": [
+            "eslint --cache --fix",
+            "prettier --write"
+        ]
+    }
 }
