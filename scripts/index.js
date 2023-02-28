@@ -2,20 +2,24 @@ var concurrently = require("concurrently");
 var path = require("path");
 
 function getRootPath() {
-  return path.resolve(__dirname, "../");
+    console.log("__dirname", __dirname);
+    return path.resolve(__dirname, "../");
 }
 
 function getPkgVersion() {
-  return require(path.join(getRootPath(), "package.json")).version;
+    return require(path.join(getRootPath(), "package.json")).version;
 }
 
 function printPkgVersion() {
-  var version = getPkgVersion();
-  console.log("pm2-web version", version);
-  console.log();
+    var version = getPkgVersion();
+    console.log("pm2-web version", version);
+    console.log();
 }
 function startApp() {
-  concurrently(["npm:server"]);
+    console.log("start app:", getRootPath());
+    concurrently(["npm:server"], {
+        cwd: getRootPath(),
+    });
 }
 
 printPkgVersion();
