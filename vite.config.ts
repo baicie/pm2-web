@@ -1,6 +1,5 @@
 import viteCompression from "vite-plugin-compression";
 import vue from "@vitejs/plugin-vue";
-import { visualizer } from "rollup-plugin-visualizer";
 import AutoImport from "unplugin-auto-import/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
@@ -18,9 +17,6 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    visualizer({
-      open: true,
-    }),
     viteCompression({
       verbose: true,
       disable: false,
