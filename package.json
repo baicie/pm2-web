@@ -1,14 +1,14 @@
 {
   "name": "@baicie/pm2-web",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "pm2 web server",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pnpm -r --filter=./client run build && pnpm -r --filter=./server run build",
-    "server:client": "pnpm -r --filter=./client run preview",
-    "server:server": "pnpm -r --filter=./server run prod",
+    "server:client": "vite preview",
+    "server:server": "nodemon --config nodemon.prod.json",
     "server": "concurrently \"npm run server:client\" \"npm run server:server\"",
     "lint": "pnpm -r --filter=./client run lint && pnpm -r --filter=./server run lint",
     "format": "pnpm -r --filter=./client run format && pnpm -r --filter=./server run format"
