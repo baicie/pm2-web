@@ -1,6 +1,6 @@
 {
   "name": "@baicie/pm2-web",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "pm2 web server",
   "type": "commonjs",
   "main": "index.js",
@@ -18,7 +18,9 @@
     "scripts",
     "bin",
     "client/dist",
-    "server/dist"
+    "server/dist",
+    "client/package.json",
+    "server/package.json"
   ],
   "license": "MIT",
   "keywords": [
